@@ -1,6 +1,11 @@
-import { Injectable } from '@nestjs/common';
-import { AbstractUserService } from '../interface/user.interface.service';
-import { CreateUserDTO, UserDTO } from '../dto/user.dto';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { AbstractUserService } from '../implementation/service/user.service';
+import {
+  CreateUserDTO,
+  UpdateUserDTO,
+  UserDetailDTO,
+  UserDTO,
+} from '../implementation/dto/user.dto';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { EntityManager, IsNull } from 'typeorm';
 import { UserEntity } from '../repository/user.entity';
@@ -31,15 +36,14 @@ export class UserService extends AbstractUserService {
   async findById(
     { id }: { id: string },
     entityManager = this.entityManager,
-  ): Promise<UserDTO | null> {
+  ): Promise<UserDetailDTO> {
     const data = await entityManager.findOne(UserEntity, {
       where: { id, deletedAt: IsNull() },
     });
 
-    if (!data) return data;
+    if (!data) throw new NotFoundException('Not Exist');
 
-    const mapped = new UserDTO();
-    Object.assign(mapped, data);
+    const mapped = plainToInstance(UserDetailDTO, data);
 
     return mapped;
   }
@@ -49,7 +53,6 @@ export class UserService extends AbstractUserService {
     entityManager = this.entityManager,
   ): Promise<string> {
     const data = new UserEntity();
-
     Object.assign(data, payload);
 
     const entity = await entityManager.save(data);
@@ -57,13 +60,33 @@ export class UserService extends AbstractUserService {
     return entity.id;
   }
 
+  async update(
+    { id }: { id: string },
+    payload: UpdateUserDTO,
+    entityManager = this.entityManager,
+  ): Promise<string> {
+    const existing = await entityManager.findOne(UserEntity, {
+      where: { id, deletedAt: IsNull() },
+    });
+
+    if (!existing) throw new NotFoundException('Not Exist');
+
+    Object.assign(existing, payload);
+
+    await entityManager.save(existing);
+
+    return 'Success';
+  }
+
   async delete(
     { id }: { id: string },
     entityManager = this.entityManager,
   ): Promise<string> {
-    const existing = await this.findById({ id }, entityManager);
+    const existing = await entityManager.findOne(UserEntity, {
+      where: { id, deletedAt: IsNull() },
+    });
 
-    if (!existing) throw Error('Not Exist');
+    if (!existing) throw new NotFoundException('Not Exist');
 
     await entityManager.softDelete(UserEntity, { id });
 

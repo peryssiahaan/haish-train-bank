@@ -1,6 +1,18 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { CreateUserDTO, FindUserParamDTO } from '../dto/user.dto';
-import { AbstractUserService } from '../interface/user.interface.service';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
+import {
+  CreateUserDTO,
+  FindUserParamDTO,
+  UpdateUserDTO,
+} from '../implementation/dto/user.dto';
+import { AbstractUserService } from '../implementation/service/user.service';
 
 @Controller({ version: '1', path: 'users' })
 export class UserController {
@@ -8,19 +20,7 @@ export class UserController {
 
   @Get()
   async getAll() {
-    const datas = await this.userService.findMany();
-
-    return datas;
-  }
-
-  @Get(':id')
-  async getById(
-    @Param()
-    param: FindUserParamDTO,
-  ) {
-    const data = await this.userService.findById(param);
-
-    return data;
+    return this.userService.findMany();
   }
 
   @Post()
@@ -28,8 +28,33 @@ export class UserController {
     @Body()
     body: CreateUserDTO,
   ) {
-    const result = await this.userService.insert(body);
+    return this.userService.insert(body);
+  }
 
-    return result;
+  @Get(':id')
+  async getById(
+    @Param()
+    param: FindUserParamDTO,
+  ) {
+    return this.userService.findById(param);
+  }
+
+  @Put(':id')
+  async update(
+    @Param()
+    param: FindUserParamDTO,
+
+    @Body()
+    body: UpdateUserDTO,
+  ) {
+    return this.userService.update(param, body);
+  }
+
+  @Delete(':id')
+  async removeById(
+    @Param()
+    param: FindUserParamDTO,
+  ) {
+    return this.userService.delete(param);
   }
 }

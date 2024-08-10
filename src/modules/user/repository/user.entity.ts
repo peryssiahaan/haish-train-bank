@@ -1,4 +1,5 @@
 import {
+  BeforeInsert,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
@@ -6,23 +7,20 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { IUser } from '../interface/user.interface';
+import { IUser } from '../implementation/interface/user.interface';
 import { AbstractEntity } from '../../../common/entity/abstract.entity';
 
 @Entity({ name: 'users' })
 export class UserEntity extends AbstractEntity implements IUser {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', unique: true })
   username: string;
 
-  @CreateDateColumn()
-  createdAt: Date;
+  @Column({ type: 'varchar', unique: true })
+  email: string;
 
-  @UpdateDateColumn()
-  updatedAt: Date;
+  @Column({ type: 'varchar' })
+  firstName: string;
 
-  @DeleteDateColumn()
-  deletedAt: Date;
+  @Column({ type: 'varchar', nullable: true })
+  familyName: string | null;
 }
