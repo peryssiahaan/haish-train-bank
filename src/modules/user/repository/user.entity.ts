@@ -1,12 +1,4 @@
-import {
-  BeforeInsert,
-  Column,
-  CreateDateColumn,
-  DeleteDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, Entity } from 'typeorm';
 import { IUser } from '../implementation/interface/user.interface';
 import { AbstractEntity } from '../../../common/entity/abstract.entity';
 

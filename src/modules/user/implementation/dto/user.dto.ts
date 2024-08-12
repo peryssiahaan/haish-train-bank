@@ -2,7 +2,6 @@ import { IsEmail, IsOptional, IsString, IsUUID } from 'class-validator';
 import { IUser } from '../interface/user.interface';
 import { Exclude, Expose } from 'class-transformer';
 import { AbstractDTO } from 'src/common/dto/abstract.dto';
-import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateUserDTO implements Omit<IUser, 'id'> {
   @IsString()
@@ -40,7 +39,7 @@ export class UserDTO extends AbstractDTO implements IUser {
 }
 
 @Exclude()
-export class UserDetailDTO extends AbstractDTO implements IUser {
+export class UserPrivateDTO extends AbstractDTO implements IUser {
   @Expose()
   id: string;
 

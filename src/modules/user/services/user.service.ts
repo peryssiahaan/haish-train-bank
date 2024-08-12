@@ -3,7 +3,7 @@ import { AbstractUserService } from '../implementation/service/user.service';
 import {
   CreateUserDTO,
   UpdateUserDTO,
-  UserDetailDTO,
+  UserPrivateDTO,
   UserDTO,
 } from '../implementation/dto/user.dto';
 import { InjectEntityManager } from '@nestjs/typeorm';
@@ -36,14 +36,14 @@ export class UserService extends AbstractUserService {
   async findById(
     { id }: { id: string },
     entityManager = this.entityManager,
-  ): Promise<UserDetailDTO> {
+  ): Promise<UserPrivateDTO> {
     const data = await entityManager.findOne(UserEntity, {
       where: { id, deletedAt: IsNull() },
     });
 
     if (!data) throw new NotFoundException('Not Exist');
 
-    const mapped = plainToInstance(UserDetailDTO, data);
+    const mapped = plainToInstance(UserPrivateDTO, data);
 
     return mapped;
   }

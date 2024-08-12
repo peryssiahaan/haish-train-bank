@@ -33,7 +33,6 @@ export class AbstractEntity implements IAbstractEntity {
   deletedBy: string;
 
   @BeforeSoftRemove()
-  @BeforeUpdate()
   updatedDeletedBy() {
     if (this.deletedAt && !this.deletedBy) {
       this.deletedBy = SYSTEM;

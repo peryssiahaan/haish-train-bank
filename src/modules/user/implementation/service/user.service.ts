@@ -1,12 +1,12 @@
 import {
   CreateUserDTO,
   UpdateUserDTO,
-  UserDetailDTO,
+  UserPrivateDTO,
   UserDTO,
 } from '../dto/user.dto';
 
 export abstract class AbstractUserService {
-  abstract findById(payload: { id: string }): Promise<UserDetailDTO>;
+  abstract findById(payload: { id: string }): Promise<UserPrivateDTO>;
   abstract findMany(): Promise<UserDTO[]>;
   abstract insert(payload: CreateUserDTO): Promise<string>;
   abstract update(

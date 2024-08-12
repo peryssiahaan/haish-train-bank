@@ -1,1 +1,1 @@
-export const SYSTEM = 'SYSTEM';
+export * from './string';
