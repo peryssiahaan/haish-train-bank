@@ -5,7 +5,7 @@ import { IRole } from '../implementation/interface/role.interface';
 
 @Entity('roles')
 export class RoleEntity extends AbstractEntity implements IRole {
-  @Column({ type: 'enum', enum: ROLES })
+  @Column({ type: 'enum', enum: ROLES, unique: true })
   code: TROLES;
 
   @Column({ type: 'varchar', nullable: true })
