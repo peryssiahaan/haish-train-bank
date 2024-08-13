@@ -1,3 +1,4 @@
+import { IAbstractService } from 'src/common/interface/abstract.interface';
 import {
   CreateUserDTO,
   UpdateUserDTO,
@@ -5,7 +6,7 @@ import {
   UserDTO,
 } from '../dto/user.dto';
 
-export abstract class AbstractUserService {
+export abstract class AbstractUserService implements IAbstractService {
   abstract findById(payload: { id: string }): Promise<UserPrivateDTO>;
   abstract findMany(): Promise<UserDTO[]>;
   abstract insert(payload: CreateUserDTO): Promise<string>;

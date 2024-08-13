@@ -9,9 +9,9 @@ export interface IAbstractEntity {
 }
 
 export interface IAbstractService {
-  findById<T>(payload: { id: string }): Promise<T>;
-  findMany<T>(): Promise<T[]>;
-  insert<T>(payload: T): Promise<string>;
-  update<T>(identifier: { id: string }, payload: T): Promise<string>;
-  delete<T>(payload: { id: string }): Promise<string>;
+  findById(payload: { id: string }): Promise<unknown>;
+  findMany(): Promise<unknown[]>;
+  insert(payload: unknown): Promise<string>;
+  update(identifier: { id: string }, payload: unknown): Promise<string>;
+  delete(payload: { id: string }): Promise<string>;
 }
