@@ -1,6 +1,18 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { AbstractUserRoleService } from '../implementation/service/userrole.service';
-import { CreateUserRoleDTO } from '../implementation/dto/userrole.dto';
+import {
+  CreateUserRoleDTO,
+  FindUserRoleParamDTO,
+  UpdateUserRoleDTO,
+} from '../implementation/dto/userrole.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('User Role')
@@ -19,5 +31,32 @@ export class UserRoleController {
     body: CreateUserRoleDTO,
   ) {
     return this.userRoleService.insert(body);
+  }
+
+  @Get(':id')
+  async getOne(
+    @Param()
+    param: FindUserRoleParamDTO,
+  ) {
+    return this.userRoleService.findById(param);
+  }
+
+  @Put(':id')
+  async mutate(
+    @Param()
+    param: FindUserRoleParamDTO,
+
+    @Body()
+    body: UpdateUserRoleDTO,
+  ) {
+    return this.userRoleService.update(param, body);
+  }
+
+  @Delete(':id')
+  async remove(
+    @Param()
+    param: FindUserRoleParamDTO,
+  ) {
+    return this.userRoleService.delete(param);
   }
 }
