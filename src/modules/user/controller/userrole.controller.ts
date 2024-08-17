@@ -7,7 +7,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { AbstractUserRoleService } from '../implementation/service/userrole.service';
+import { IUserRoleService } from '../implementation/service/userrole.service';
 import {
   CreateUserRoleDTO,
   FindUserRoleParamDTO,
@@ -18,7 +18,7 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('User Role')
 @Controller({ version: '1', path: 'userroles' })
 export class UserRoleController {
-  constructor(private readonly userRoleService: AbstractUserRoleService) {}
+  constructor(private readonly userRoleService: IUserRoleService) {}
 
   @Get()
   async getAll() {

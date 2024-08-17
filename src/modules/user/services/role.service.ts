@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { AbstractRoleService } from '../implementation/service/role.service';
+import { IRoleService } from '../implementation/service/role.service';
 import {
   CreateRoleDTO,
   RoleDTO,
@@ -12,7 +12,7 @@ import { plainToInstance } from 'class-transformer';
 import { InjectEntityManager } from '@nestjs/typeorm';
 
 @Injectable()
-export class RoleService extends AbstractRoleService {
+export class RoleService extends IRoleService {
   constructor(
     @InjectEntityManager()
     private readonly entityManager: EntityManager,

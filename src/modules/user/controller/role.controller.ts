@@ -12,13 +12,13 @@ import {
   FindRoleParamDTO,
   UpdateRoleDTO,
 } from '../implementation/dto/role.dto';
-import { AbstractRoleService } from '../implementation/service/role.service';
+import { IRoleService } from '../implementation/service/role.service';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Role')
 @Controller({ version: '1', path: 'roles' })
 export class RoleController {
-  constructor(private readonly roleService: AbstractRoleService) {}
+  constructor(private readonly roleService: IRoleService) {}
 
   @Get()
   async getAll() {

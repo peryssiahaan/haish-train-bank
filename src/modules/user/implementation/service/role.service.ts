@@ -6,7 +6,7 @@ import {
   UpdateRoleDTO,
 } from '../dto/role.dto';
 
-export abstract class AbstractRoleService implements IAbstractService {
+export abstract class IRoleService implements IAbstractService {
   abstract findById(payload: { id: string }): Promise<RolePrivateDTO>;
   abstract findMany(): Promise<RoleDTO[]>;
   abstract insert(payload: CreateRoleDTO): Promise<string>;

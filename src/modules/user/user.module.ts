@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { UserController } from './controller/user.controller';
-import { AbstractUserService } from './implementation/service/user.service';
+import { IUserService } from './implementation/service/user.service';
 import { UserService } from './services/user.service';
 import { RoleController } from './controller/role.controller';
-import { AbstractRoleService } from './implementation/service/role.service';
+import { IRoleService } from './implementation/service/role.service';
 import { RoleService } from './services/role.service';
-import { AbstractUserRoleService } from './implementation/service/userrole.service';
+import { IUserRoleService } from './implementation/service/userrole.service';
 import { UserRoleService } from './services/userrole.service';
 import { UserRoleController } from './controller/userrole.controller';
 
@@ -13,18 +13,18 @@ import { UserRoleController } from './controller/userrole.controller';
   controllers: [UserController, RoleController, UserRoleController],
   providers: [
     {
-      provide: AbstractUserService,
+      provide: IUserService,
       useClass: UserService,
     },
     {
-      provide: AbstractRoleService,
+      provide: IRoleService,
       useClass: RoleService,
     },
     {
-      provide: AbstractUserRoleService,
+      provide: IUserRoleService,
       useClass: UserRoleService,
     },
   ],
-  exports: [AbstractUserService, AbstractRoleService, AbstractUserRoleService],
+  exports: [IUserService, IRoleService, IUserRoleService],
 })
 export class UserModule {}

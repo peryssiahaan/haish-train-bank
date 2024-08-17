@@ -6,7 +6,7 @@ import {
   UpdateQuestionDTO,
 } from '../dto/question.dto';
 
-export abstract class AbstractQuestionService implements IAbstractService {
+export abstract class IQuestionService implements IAbstractService {
   abstract findById(payload: { id: string }): Promise<QuestionPrivateDTO>;
   abstract findMany(): Promise<QuestionDTO[]>;
   abstract insert(payload: CreateQuestionDTO): Promise<string>;

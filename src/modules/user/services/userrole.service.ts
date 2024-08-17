@@ -3,7 +3,7 @@ import {
   NotFoundException,
   ConflictException,
 } from '@nestjs/common';
-import { AbstractUserRoleService } from '../implementation/service/userrole.service';
+import { IUserRoleService } from '../implementation/service/userrole.service';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { EntityManager } from 'typeorm';
 import {
@@ -17,7 +17,7 @@ import { UserEntity } from '../repository/user.entity';
 import { RoleEntity } from '../repository/role.entity';
 
 @Injectable()
-export class UserRoleService extends AbstractUserRoleService {
+export class UserRoleService extends IUserRoleService {
   constructor(
     @InjectEntityManager()
     private readonly entityManager: EntityManager,

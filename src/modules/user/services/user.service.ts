@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { AbstractUserService } from '../implementation/service/user.service';
+import { IUserService } from '../implementation/service/user.service';
 import {
   CreateUserDTO,
   UpdateUserDTO,
@@ -12,7 +12,7 @@ import { UserEntity } from '../repository/user.entity';
 import { plainToInstance } from 'class-transformer';
 
 @Injectable()
-export class UserService extends AbstractUserService {
+export class UserService extends IUserService {
   constructor(
     @InjectEntityManager()
     private readonly entityManager: EntityManager,

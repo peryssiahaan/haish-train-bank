@@ -12,13 +12,13 @@ import {
   FindUserParamDTO,
   UpdateUserDTO,
 } from '../implementation/dto/user.dto';
-import { AbstractUserService } from '../implementation/service/user.service';
+import { IUserService } from '../implementation/service/user.service';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('User')
 @Controller({ version: '1', path: 'users' })
 export class UserController {
-  constructor(private readonly userService: AbstractUserService) {}
+  constructor(private readonly userService: IUserService) {}
 
   @Get()
   async getAll() {
