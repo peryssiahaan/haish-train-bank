@@ -5,3 +5,11 @@ export const ROLES = {
 } as const;
 
 export type TROLES = keyof typeof ROLES;
+
+export const DIFFICULTIES = {
+  NORMAL: 'NORMAL',
+  INTERMEDIATE: 'INTERMEDIATE',
+  ADVANCE: 'ADVANCE',
+};
+
+export type TDIFFICULTIES = keyof typeof DIFFICULTIES;
