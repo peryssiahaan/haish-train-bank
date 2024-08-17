@@ -17,13 +17,11 @@ import { UserEntity } from '../repository/user.entity';
 import { RoleEntity } from '../repository/role.entity';
 
 @Injectable()
-export class UserRoleService extends IUserRoleService {
+export class UserRoleService implements IUserRoleService {
   constructor(
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
-  ) {
-    super();
-  }
+  ) {}
 
   async findMany(entityManager = this.entityManager): Promise<UserRoleDTO[]> {
     const datas = await entityManager.find(UserRoleEntity);

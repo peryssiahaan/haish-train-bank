@@ -12,13 +12,11 @@ import { UserEntity } from '../repository/user.entity';
 import { plainToInstance } from 'class-transformer';
 
 @Injectable()
-export class UserService extends IUserService {
+export class UserService implements IUserService {
   constructor(
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
-  ) {
-    super();
-  }
+  ) {}
 
   async findMany(entityManager = this.entityManager): Promise<UserDTO[]> {
     const datas = await entityManager.find(UserEntity, {

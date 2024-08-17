@@ -1,49 +1,44 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { IRoleService } from '../implementation/service/role.service';
+import { IQuestionService } from '../implementation/service/question.service';
 import {
-  CreateRoleDTO,
-  RoleDTO,
-  RolePrivateDTO,
-  UpdateRoleDTO,
-} from '../implementation/dto/role.dto';
-import { RoleEntity } from '../repository/role.entity';
-import { EntityManager, IsNull } from 'typeorm';
+  CreateQuestionDTO,
+  QuestionDTO,
+  QuestionPrivateDTO,
+  UpdateQuestionDTO,
+} from '../implementation/dto/question.dto';
 import { plainToInstance } from 'class-transformer';
+import { EntityManager, IsNull } from 'typeorm';
 import { InjectEntityManager } from '@nestjs/typeorm';
+import { QuestionEntity } from '../repository/question.entity';
 
 @Injectable()
-export class RoleService implements IRoleService {
+export class QuestionService implements IQuestionService {
   constructor(
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
   ) {}
-
   async findById(
-    {
-      id,
-    }: {
-      id: string;
-    },
+    { id }: { id: string },
     entityManager = this.entityManager,
-  ): Promise<RolePrivateDTO> {
-    const data = await entityManager.findOne(RoleEntity, {
+  ): Promise<QuestionPrivateDTO> {
+    const data = await entityManager.findOne(QuestionEntity, {
       where: { id, deletedAt: IsNull() },
     });
 
     if (!data) throw new NotFoundException('Not Exist');
 
-    const mapped = plainToInstance(RolePrivateDTO, data);
+    const mapped = plainToInstance(QuestionPrivateDTO, data);
 
     return mapped;
   }
 
-  async findMany(entityManager = this.entityManager): Promise<RoleDTO[]> {
-    const datas = await entityManager.find(RoleEntity, {
+  async findMany(entityManager = this.entityManager): Promise<QuestionDTO[]> {
+    const datas = await entityManager.find(QuestionEntity, {
       where: { deletedAt: IsNull() },
     });
 
     const mapped = datas.map((data) => {
-      const user = plainToInstance(RoleDTO, data);
+      const user = plainToInstance(QuestionDTO, data);
       return user;
     });
 
@@ -51,10 +46,10 @@ export class RoleService implements IRoleService {
   }
 
   async insert(
-    payload: CreateRoleDTO,
+    payload: CreateQuestionDTO,
     entityManager = this.entityManager,
   ): Promise<string> {
-    const data = new RoleEntity();
+    const data = new QuestionEntity();
     Object.assign(data, payload);
 
     const entity = await entityManager.save(data);
@@ -64,10 +59,10 @@ export class RoleService implements IRoleService {
 
   async update(
     { id }: { id: string },
-    payload: UpdateRoleDTO,
+    payload: UpdateQuestionDTO,
     entityManager = this.entityManager,
   ): Promise<string> {
-    const existing = await entityManager.findOne(RoleEntity, {
+    const existing = await entityManager.findOne(QuestionEntity, {
       where: { id, deletedAt: IsNull() },
     });
 
@@ -84,13 +79,13 @@ export class RoleService implements IRoleService {
     { id }: { id: string },
     entityManager = this.entityManager,
   ): Promise<string> {
-    const existing = await entityManager.findOne(RoleEntity, {
+    const existing = await entityManager.findOne(QuestionEntity, {
       where: { id, deletedAt: IsNull() },
     });
 
     if (!existing) throw new NotFoundException('Not Exist');
 
-    await entityManager.softDelete(RoleEntity, { id });
+    await entityManager.softDelete(QuestionEntity, { id });
 
     return 'Success';
   }
